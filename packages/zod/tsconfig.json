@@ -2,6 +2,7 @@
   "$schema": "https://json.schemastore.org/tsconfig",
 
   "compilerOptions": {
+
     // Module and runtime settings
     "module": "NodeNext", // Use Node.js-style module resolution with ESM support
     "target": "es2022", // Target modern ES2022 JavaScript features
