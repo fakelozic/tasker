@@ -6,7 +6,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func registerTodoRoutes(r *echo.Group, h *handler.TodoHandler, ch *handler.CommentHandler, auth *middleware.AuthMiddleware){
+func registerTodoRoutes(r *echo.Group, h *handler.TodoHandler, ch *handler.CommentHandler, auth *middleware.AuthMiddleware) {
 	// Todo operations
 	todos := r.Group("/todos")
 	todos.Use(auth.RequireAuth)
@@ -26,4 +26,10 @@ func registerTodoRoutes(r *echo.Group, h *handler.TodoHandler, ch *handler.Comme
 	todoComments := dynamicTodo.Group("/comments")
 	todoComments.POST("", ch.AddComment)
 	todoComments.GET("", ch.GetCommentsByTodoID)
+
+	// Todo attachments
+	todoAttachments := dynamicTodo.Group("/attachments")
+	todoAttachments.POST("", h.UploadTodoAttachment)
+	todoAttachments.DELETE("/:attachmentId", h.DeleteTodoAttachment)
+	todoAttachments.GET("/:attachmentId/download", h.GetAttachmentPresignedURL)
 }
